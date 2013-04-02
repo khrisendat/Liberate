@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!--I assume at the yeild command it yeilds to whatever is in the view files-->
+  <title><%= full_title(yield(:title)) %></title>
+  <%= stylesheet_link_tag  "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <!--this is here because IE is stupid and old versions dont support html5
+	the line below is a special syntax recognized by IE-->
+    <%= render 'layouts/shim' %>
+</head>
+<body>
+	<!--the class described by the header has special meaning to boostrap gem-->	
+	<%= render 'layouts/header' %>
+<!--the class container has special meaning to boostrap gem-->	
+	<div class="container">
+		<!--the flash keyword is a special ruby function and it only appears once on call-->
+		<% flash.each do |key, value| %>
+        	<div class="alert alert-<%= key %>"><%= value %></div>
+        <% end %>
+        <!--I assume at the yield command it yeilds to whatever is in the view files-->
+		<%= yield %>
+ 	<%= render 'layouts/footer' %>
+ 	<%= debug(params) if Rails.env.development? %>
+	</div>
+</body>
+</html>
