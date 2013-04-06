@@ -12,6 +12,14 @@ FactoryGirl.define do
     	admin true
     end
   end
+
+
+  factory :book do
+  	sequence(:name) { |n| "Book_#{n}" }
+  	sequence(:author) { |n| "Author_#{n}"}
+  	sequence(:description) { |n| "This book is ok_#{n}"}
+  	sequence(:image_url) { |n| "http://picture.png_#{n}"}
+  end
 end
 
 

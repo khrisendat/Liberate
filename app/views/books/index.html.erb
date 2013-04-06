@@ -1,0 +1,13 @@
+<% provide(:title, 'All books') %>
+<h1>All Books</h1>
+
+<!--change this class later-->
+<ul class="users">
+  <% if @books%>
+  <% @books.each do |book| %>
+    <li>
+      <%= link_to book.name, book %>
+    </li>
+  <% end %>
+<% end %>
+</ul>

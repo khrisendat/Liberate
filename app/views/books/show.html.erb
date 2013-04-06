@@ -1,11 +1,11 @@
-<%provide(:title,@user.name)%>
+<%provide(:title,@book.name)%>
 <div class="row">
 	<aside class="span4">
 		<section>
 			<h1>
-				<%= gravatar_for @user %>
-				<%= @user.name %>
+				<%=@book.name%>
+				<%=@book.description%>
 			</h1>
 		</section>
 	</aside>
-</div>		
+</div>	

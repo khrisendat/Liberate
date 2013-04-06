@@ -17,5 +17,12 @@ namespace :db do
                    password: password,
                    password_confirmation: password)
     end
+    99.times do |n|
+      author = "author=#{n}"
+      name = "xample-#{n+1}"
+      image_url = "http://picture.-#{n+1}.png"
+      description = "description-#{n+1}"
+      Book.create!(name: name, author: author, image_url: image_url, description: description)
+    end
   end
 end

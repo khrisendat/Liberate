@@ -21,12 +21,20 @@ module SessionsHelper
 	
 	def signed_in?
 		!current_user.nil?
-
 	end
 
 	def sign_out
     	self.current_user = nil
     	cookies.delete(:remember_token)
   	end
+
+  	def admin_user
+      redirect_to(root_path) unless current_user.admin?
+    end
+
+    def signed_in_user
+      redirect_to signin_url, notice: "Please sign in" unless signed_in?
+    end
+
 
 end
