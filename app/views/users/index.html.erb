@@ -6,6 +6,7 @@
     <li>
       <%= gravatar_for user%>
       <%= link_to user.name, user %>
+      <!--the conditional below is for where the delete would show.-->
       	<% if current_user.admin? && !current_user?(user) %>
       		| <%= link_to "Delete", user, method: :delete, data: { confirm: "You sure?"} %>
       	<%end%>

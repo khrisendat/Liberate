@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     # thus when an account is first created "Account" does not appear since 
     # current user is not set. I added sign_in @user here from the sessions_helper.
     #Apparently functions from there can be used here. 
-	else
+	  else
 	 	#fail to create user
   		render 'new'
   	end

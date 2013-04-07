@@ -7,6 +7,12 @@
   <% @books.each do |book| %>
     <li>
       <%= link_to book.name, book %>
+      <% if signed_in? %>
+      	<% if current_user.admin? %>
+      		| <%= link_to "Delete", book, method: :delete, data: { confirm: "You sure?"} %>
+      		| <%= link_to "Edit", edit_book_path(book) %>
+      	<%end%>
+      <%end%>
     </li>
   <% end %>
 <% end %>

@@ -33,11 +33,4 @@ describe Book do
   	end
   end
 
-  describe "filter test" do
-  	describe "for unsigned user" do
-  		
-  	end
-  end
-
-
 end
