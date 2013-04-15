@@ -1,0 +1,11 @@
+<ul class="users">
+  <% if @comments%>
+  <% @comments.each do |comment| %>
+    <li>
+      <!-- it is interesting here how just providing the object book here links to the show method--> 
+      <%= link_to comment.comment, comment%>
+      <!--have to add somewhere in here the user name-->
+    </li>
+  <% end %>
+<% end %>
+</ul>

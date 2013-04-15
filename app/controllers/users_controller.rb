@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    #params[:user] 
+    #params[:user] here pulls all the object and all of it's attributes from the url.
     #@user = User.new(params[:user]) is eqivalent to @user = User.new(name: "Foo Bar", email: "foo@invalid", password: "foo", password_confirmation: "bar")
   	@user = User.new(params[:user])
   	if @user.save

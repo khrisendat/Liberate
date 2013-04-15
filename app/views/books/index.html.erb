@@ -6,9 +6,11 @@
   <% if @books%>
   <% @books.each do |book| %>
     <li>
-      <%= link_to book.name, book %>
+      <!-- it is interesting here how just providing the object book here links to the show method--> 
+      <%= link_to book.name, book%>
       <% if signed_in? %>
       	<% if current_user.admin? %>
+        <!--data here just makes the pop up and takes the answer to on whether to execute-->
       		| <%= link_to "Delete", book, method: :delete, data: { confirm: "You sure?"} %>
       		| <%= link_to "Edit", edit_book_path(book) %>
       	<%end%>

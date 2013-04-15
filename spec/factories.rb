@@ -20,6 +20,13 @@ FactoryGirl.define do
   	sequence(:description) { |n| "This book is ok_#{n}"}
   	sequence(:image_url) { |n| "http://picture.png_#{n}"}
   end
+
+
+  factory :comment do
+    sequence(:comment) { |n| "hey this is a comment #{n}!"}
+    book_id 5
+    user_id 1
+  end
 end
 
 

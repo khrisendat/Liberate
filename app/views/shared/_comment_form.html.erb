@@ -1,0 +1,10 @@
+<%= form_for(@comment) do |f| %>
+  <div class="field">
+    <%= f.text_area :comment, placeholder: "Compose new comment..." %>
+    <!--this is an unconventional way of doing it with a hidden field there should be other ways.--> 
+    <%= f.hidden_field :book_id, :value => @book.id %>
+  </div>
+  <%= f.submit "Submit Comment", class: "btn btn-large btn-primary" %>
+  <div>
+  </div>
+<% end %>
