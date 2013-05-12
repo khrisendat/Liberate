@@ -1,23 +1,14 @@
-<% provide(:title, 'All books') %>
-<h1>All Books</h1>
+<h1>Results</h1>
 
 
-<%= form_tag :controller => 'books', :action => 'search', :method => 'get' do %>
+<%= form_tag search_books_path do %>
   <p>
-    <%= text_field_tag :search, params[:search] %>
+    <%= text_field_tag :search %>
     <%= submit_tag "Search"  %>
   </p>
 <% end %>
 
 
-<% if signed_in? %>
-    <% if current_user.admin? %>
-        <div class="addBook"><%= link_to "Add New Book", new_book_path%></div>
-    <%end%>
-<%end%>
-
-
-<!--change this class later-->
 <ul class="users">
   <% if @books%>
   <% @books.each do |book| %>

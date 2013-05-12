@@ -9,6 +9,7 @@ class UsersController < ApplicationController
 
   def show
   	@user = User.find(params[:id])
+    @checkedouts = @user.checkedouts.all
   end
 
   def create

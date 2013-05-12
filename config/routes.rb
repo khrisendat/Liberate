@@ -7,8 +7,13 @@ SampleAppHartl::Application.routes.draw do
   end
 
   resources :sessions, only: [:new, :create, :destroy]
-  resources :books
+  
+  resources :books do
+    get 'search', :on => :collection
+  end
+  
   resources :comments, only: [:create, :destroy]
+  resources :checkedouts
   
 
   root to: 'static_pages#home'

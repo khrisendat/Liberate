@@ -22,8 +22,10 @@ class BooksController < ApplicationController
 	def show
 		#so params[:id] takes the parameter :id from the url string. 
 		@book = Book.find(params[:id])
+		@checkedout = current_user.checkedouts.new if signed_in?
 		@comment = current_user.comments.new if signed_in?
 		@comments = @book.comments.all
+		
 	end
 
 	def index
@@ -52,6 +54,13 @@ class BooksController < ApplicationController
     	redirect_to books_url
 	end
 
+	def search
+		if params[:search]
+  			@books = Book.search(params[:search])
+  		else
+  			@books = Book.all
+  		end
+	end
 	
 
 end

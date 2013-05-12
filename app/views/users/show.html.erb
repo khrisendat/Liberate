@@ -8,4 +8,17 @@
 			</h1>
 		</section>
 	</aside>
-</div>		
+</div>	
+
+<div class= "row">
+	<ul class="users">
+  		<% @checkedouts.each do |checkout| %>
+   		 <li>
+      <!-- it is interesting here how just providing the object book here links to the show method--> 
+      		<% book=Book.find(checkout.book_id) %>
+      		<%= book.name %>
+      <!--have to add somewhere in here the user name-->
+         </li>
+    	<% end %>
+  </ul>
+</div>	

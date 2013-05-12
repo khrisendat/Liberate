@@ -1,7 +1,11 @@
 class User < ActiveRecord::Base
   #mass assignable atrributes
   attr_accessible :email, :name, :password, :password_confirmation
+  
   has_many :comments
+  has_many :checkedouts
+  has_many :books, :through => :checkedouts
+  
   has_secure_password
   
   before_save { |user| user.email = email.downcase}

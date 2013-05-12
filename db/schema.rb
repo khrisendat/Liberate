@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130511183458) do
+ActiveRecord::Schema.define(:version => 20130512182644) do
 
   create_table "books", :force => true do |t|
     t.string   "name"
@@ -26,6 +26,22 @@ ActiveRecord::Schema.define(:version => 20130511183458) do
 
   add_index "books", ["isbn"], :name => "index_books_on_isbn"
 
+  create_table "checkedouts", :force => true do |t|
+    t.integer  "book_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+#this is a major tragedy. Avoid this table and do not touch it. It is virus must be contained
+#
+
+  create_table "checkouts", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "user"
+  end
+
   create_table "comments", :force => true do |t|
     t.string   "comment"
     t.integer  "book_id"
@@ -37,6 +53,13 @@ ActiveRecord::Schema.define(:version => 20130511183458) do
 
   add_index "comments", ["book_id"], :name => "index_comments_on_book_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
+  create_table "reserves", :force => true do |t|
+    t.integer  "book_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"
