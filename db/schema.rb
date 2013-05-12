@@ -11,16 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130407032003) do
+ActiveRecord::Schema.define(:version => 20130511183458) do
 
   create_table "books", :force => true do |t|
     t.string   "name"
     t.string   "author"
     t.string   "image_url"
     t.string   "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.string   "isbn"
+    t.boolean  "is_checked_out", :default => false
   end
+
+  add_index "books", ["isbn"], :name => "index_books_on_isbn"
 
   create_table "comments", :force => true do |t|
     t.string   "comment"
@@ -28,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20130407032003) do
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "rating"
   end
 
   add_index "comments", ["book_id"], :name => "index_comments_on_book_id"

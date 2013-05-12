@@ -13,6 +13,9 @@ class CommentsController < ApplicationController
 		else
 			#this will be changed later
 			#errors will be processed in the view
+			#redirect_to @book
+			@book= params[:book]
+			flash[:error] = "Comment has not been succesfully created"
 			redirect_to @book
 		end
 	end

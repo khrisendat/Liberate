@@ -1,13 +1,38 @@
 <%provide(:title,@book.name)%>
+
+<div class = "book_image">
+	<%= image_tag(@book.image_url, :alt => "alt text") %>
+</div>
+
+
+
 <div class="row">
-	<aside class="span4">
-		<section>
-			<h1>
+		<section class="bookInfo">
+			<h1 class="title">
 				<%=@book.name%>
-				<%=@book.description%>
 			</h1>
 		</section>
+		<section>
+			<%="ISBN: "+@book.isbn%><br>
+			<%="Author: " +@book.author%><br>
+			<%= 
+				message = "Currently Checked Out: "
+				if @book.is_checked_out == false
+					message += "No"
+				else
+					message += "Yes"
+				end
+				message%><br>
+			<%=@book.description%>
+		</section>
+</div>	
+
+<div>
 		<%if signed_in? %>
+		<section>
+			Check Out Book
+			Reserve Book
+		</section>
 		<section>
 			<%=render 'shared/comment_form' %>
 		</section>
@@ -15,5 +40,4 @@
 		<section>
 			<%=render 'shared/comments'%>
 		</section>
-	</aside>
-</div>	
+</div>

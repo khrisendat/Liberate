@@ -1,3 +1,26 @@
 // Place all the styles related to the books controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.book_image {
+	float: right;
+	padding-left: 10px;
+
+}
+
+.book_icon {
+	height: 40px;
+	width: 30px;
+	padding-right: 10px;
+
+}
+
+.bookInfo {
+	
+}
+
+.addBook {
+	float: right;
+	font-size: 2em;
+
+}

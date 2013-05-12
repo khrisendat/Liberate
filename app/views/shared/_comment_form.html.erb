@@ -1,6 +1,8 @@
+<div class="user_feedback">
 <%= form_for(@comment) do |f| %>
   <div class="field">
-    <%= f.text_area :comment, placeholder: "Compose new comment..." %>
+  	<%= f.text_field :rating, placeholder: "Please enter a rating from 0 to 100", :size => 5%>
+    <%= f.text_area :comment, placeholder: "Compose new comment...", :rows => "7" %>
     <!--this is an unconventional way of doing it with a hidden field there should be other ways.--> 
     <%= f.hidden_field :book_id, :value => @book.id %>
   </div>
@@ -8,3 +10,4 @@
   <div>
   </div>
 <% end %>
+</div>

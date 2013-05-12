@@ -3,7 +3,9 @@
   <% @comments.each do |comment| %>
     <li>
       <!-- it is interesting here how just providing the object book here links to the show method--> 
-      <%= link_to comment.comment, comment%>
+      <%= gravatar_for comment.user%>
+      <%= "User's Rating: "+ comment.rating.to_s + " out of 100"%><br>
+      <%= comment.comment%>
       <!--have to add somewhere in here the user name-->
     </li>
   <% end %>

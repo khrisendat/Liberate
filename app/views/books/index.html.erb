@@ -1,12 +1,16 @@
 <% provide(:title, 'All books') %>
 <h1>All Books</h1>
 
+<div class="addBook"><%= link_to "Add New Book", new_book_path%></div>
+
+
 <!--change this class later-->
 <ul class="users">
   <% if @books%>
   <% @books.each do |book| %>
     <li>
       <!-- it is interesting here how just providing the object book here links to the show method--> 
+      <%= image_tag(book.image_url, :alt => "alt text", :class => "book_icon") %>
       <%= link_to book.name, book%>
       <% if signed_in? %>
       	<% if current_user.admin? %>

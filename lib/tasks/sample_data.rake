@@ -21,9 +21,12 @@ namespace :db do
     99.times do |n|
       author = "author=#{n}"
       name = "xample-#{n+1}"
-      image_url = "http://picture.-#{n+1}.png"
+      image_url = "http://i.imgur.com/WSJIMk7.png"
       description = "description-#{n+1}"
-      Book.create!(name: name, author: author, image_url: image_url, description: description)
+      isbn = "1234#{n}"
+      is_checked_out = false
+      Book.create!(name: name, author: author, image_url: image_url, description: description, isbn: isbn, is_checked_out: false)
     end
+
   end
 end

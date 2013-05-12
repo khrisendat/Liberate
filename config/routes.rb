@@ -1,6 +1,11 @@
 SampleAppHartl::Application.routes.draw do
 
-  resources :users
+  resources :users do
+    member do
+      put 'suspend'
+    end
+  end
+
   resources :sessions, only: [:new, :create, :destroy]
   resources :books
   resources :comments, only: [:create, :destroy]
