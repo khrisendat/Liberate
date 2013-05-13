@@ -30,8 +30,10 @@
 <div>
 		<%if signed_in? %>
 		<section>
-			<%=render 'shared/checkedout_button' %>
-			Reserve Book
+			<%if !@book.is_checked_out %>
+				<%=render 'shared/checkedout_button' %>
+				Reserve Book
+			<%end%>
 		</section>
 		<section>
 			<%=render 'shared/comment_form' %>

@@ -1,10 +1,10 @@
 <h1>Results</h1>
 
 
-<%= form_tag search_books_path do %>
+<%= form_tag search_books_path, :method => 'get' do %>
   <p>
     <%= text_field_tag :search %>
-    <%= submit_tag "Search"  %>
+    <%= submit_tag "Search", class: "btn btn-large btn-primary" %>
   </p>
 <% end %>
 

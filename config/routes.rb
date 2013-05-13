@@ -13,7 +13,7 @@ SampleAppHartl::Application.routes.draw do
   end
   
   resources :comments, only: [:create, :destroy]
-  resources :checkedouts
+  resources :checkedouts, only: [:create]
   
 
   root to: 'static_pages#home'
