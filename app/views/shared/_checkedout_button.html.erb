@@ -1,15 +1,9 @@
 <div class="user_feedback">
-
-<% if !@book.is_checked_out  %>
 	<%= form_for(@checkedout) do |f| %>
     	<!--this is an unconventional way of doing it with a hidden field there should be other ways.--> 
     	<%= f.hidden_field :book_id, :value => @book.id %>
-    	<% @book.increment(:checkedout_count, by = 1)
-    	@book.update_attributes(:is_checked_out => true) %>
-
   	<%= f.submit "Checkout Book", class: "btn btn-large btn-primary" %>
 	<% end %>
-<%end%>
 
 
 </div>

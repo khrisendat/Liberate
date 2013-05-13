@@ -14,6 +14,7 @@ class BooksController < ApplicationController
 		if @book.save
 			flash[:success] = "Book has been succesfully created"
 			redirect_to current_user
+			#change to books
 		else
 			render 'new'
 		end
@@ -24,8 +25,7 @@ class BooksController < ApplicationController
 		@book = Book.find(params[:id])
 		@checkedout = current_user.checkedouts.new if signed_in?
 		@comment = current_user.comments.new if signed_in?
-		@comments = @book.comments.all
-		
+		@comments = @book.comments.all		
 	end
 
 	def index

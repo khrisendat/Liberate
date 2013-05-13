@@ -7,7 +7,13 @@ class CheckedoutsController < ApplicationController
 		if @checkedout.save
 			flash[:success] = "Book has been succesfully check out"
 			@book=Book.find(params[:checkedout][:book_id])
-			#show_book_path can be shown at @book
+			@books=Book.all			
+			#the two lines below should be in a helper method or put into the model?
+			@book.update_attributes(:is_checked_out => true) 
+			#there is another way. This is a hack. update_attributes didn't work here because the sql call that it made didn't return anything.
+			checkout_remaining = current_user.checkedout_count  
+			checkout_remaining -= 1
+			User.update_all("checkedout_count = " + checkout_remaining.to_s, ["users.id = ?", current_user.id])
 			redirect_to @book
 		else
 			#this will be changed later
