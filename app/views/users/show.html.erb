@@ -15,8 +15,13 @@
   		<% @checkedouts.each do |checkout| %>
    		 <li>
       <!-- it is interesting here how just providing the object book here links to the show method--> 
+
       		<% book=Book.find(checkout.book_id) %>
-      		<%= book.name %>
+      		<%= image_tag(book.image_url, :alt => "alt text", :class => "book_icon") %>
+      		<%= link_to book.name, book%>
+          <%= date = checkout.created_at + 28.days
+          date.to_date 
+          %>
       <!--have to add somewhere in here the user name-->
          </li>
     	<% end %>

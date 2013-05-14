@@ -28,5 +28,13 @@ namespace :db do
       Book.create!(name: name, author: author, image_url: image_url, description: description, isbn: isbn, is_checked_out: false)
     end
 
+    author = "Bill James"
+    name = "Baseball Book"
+    image_url = "http://www.slate.com/content/dam/slate/blogs/bad_astronomy/2012/12/best_of_2012_photos/SDO_arch.jpg.CROP.article920-large.jpg"
+    description = "lalalallalalalal"
+    isbn = 12345
+    is_checked_out = false
+    Book.create!(name: name, author: author, image_url: image_url, description: description, isbn: isbn, is_checked_out: false)
+
   end
 end
