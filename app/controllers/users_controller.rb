@@ -11,7 +11,6 @@ class UsersController < ApplicationController
   	@user = User.find(params[:id])
     @checkedouts = @user.checkedouts.all
 
-    
   end
 
   def create
@@ -56,6 +55,22 @@ class UsersController < ApplicationController
     flash[:success]="User removed"
     redirect_to users_url
     #redirect_to users_path does the same
+  end
+
+  def return_book
+    @book = Book.find(params[:book_id])
+    @book.update_attributes(:is_checked_out => false)
+
+    @checkedout = Checkedout.find(params[:checkedout_id])
+    @checkedout.update_attributes(:active => false)
+
+    checkout_remaining = current_user.checkedout_count  
+    checkout_remaining += 1
+    User.update_all("checkedout_count = " + checkout_remaining.to_s, ["users.id = ?", current_user.id])
+    
+    @user=current_user
+    @checkedouts = @user.checkedouts.all
+    render 'show'
   end
 
   private

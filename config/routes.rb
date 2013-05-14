@@ -3,13 +3,16 @@ SampleAppHartl::Application.routes.draw do
   resources :users do
     member do
       put 'suspend'
+      put 'return_book'
     end
+
   end
 
   resources :sessions, only: [:new, :create, :destroy]
   
   resources :books do
     get 'search', :on => :collection
+    
   end
   
   resources :comments, only: [:create, :destroy]
