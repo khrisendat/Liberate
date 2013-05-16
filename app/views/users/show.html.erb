@@ -11,6 +11,14 @@
 				<%= gravatar_for @user %>
 				<%= "Welcome " + @user.name %>
         <div>
+          <% if @user.is_vip 
+              membershiptype = 'VIP'
+            else
+              membershiptype = 'Basic'%>
+          <%end%>
+          <%= "Membership Type: " + membershiptype %> 
+        </div>
+        <div>
         <%= "Checkouts Remaing: " + @user.checkedout_count.to_s %> 
         </div>
         <div>

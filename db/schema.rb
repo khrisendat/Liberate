@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130515221547) do
+ActiveRecord::Schema.define(:version => 20130516003914) do
 
   create_table "books", :force => true do |t|
     t.string   "name"
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(:version => 20130515221547) do
     t.float    "balance",          :default => 0.0
     t.integer  "checkedout_count", :default => 3
     t.boolean  "is_suspended",     :default => false
+    t.boolean  "is_vip",           :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

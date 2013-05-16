@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   	@user = User.find(params[:id])
     @checkedouts = @user.checkedouts.all
     @reserveds = @user.reserveds.all
+    
     @checkedouts.each do |checkedout|
       a = Date.today > checkedout.datedue + 28.days
       if checkedout.active and a
