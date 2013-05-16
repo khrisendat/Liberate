@@ -10,7 +10,14 @@ class UsersController < ApplicationController
   def show
   	@user = User.find(params[:id])
     @checkedouts = @user.checkedouts.all
-
+    @reserveds = @user.reserveds.all
+    @checkedouts.each do |checkedout|
+      a = Date.today > checkedout.datedue + 28.days
+      if checkedout.active and a
+        @fine=Fine.create(checkedout_id: checkedout.id, amount: 0.5)
+        @user.update_attributes(:balance => @user.balance + 1)
+      end
+    end 
   end
 
   def create
@@ -57,6 +64,20 @@ class UsersController < ApplicationController
     #redirect_to users_path does the same
   end
 
+  def suspend
+     @user=User.find(params[:id])
+
+      if !@user.is_suspended
+        #@user.update_attributes(:is_suspended => true)
+        User.update_all("is_suspended = 'true'", ["users.id = ?", @user.id])
+      else
+        User.update_all("is_suspended = 'false'", ["users.id = ?", @user.id])
+      end
+     @users = User.all
+     render 'index'
+  end
+
+
   def return_book
     @book = Book.find(params[:book_id])
     @book.update_attributes(:is_checked_out => false)
@@ -68,10 +89,14 @@ class UsersController < ApplicationController
     checkout_remaining += 1
     User.update_all("checkedout_count = " + checkout_remaining.to_s, ["users.id = ?", current_user.id])
     
-    @user=current_user
+    @user=User.find(params[:id])
     @checkedouts = @user.checkedouts.all
+    @reserveds = @user.reserveds.all
     render 'show'
   end
+
+
+
 
   private
 

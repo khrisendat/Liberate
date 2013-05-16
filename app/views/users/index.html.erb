@@ -7,9 +7,10 @@
       <%= gravatar_for user%>
       <%= link_to user.name, user %>
       <!--the conditional below is for where the delete would show.-->
-      	<% if current_user.admin? && !current_user?(user) %>
+      	<% if current_user.admin && !current_user?(user) %>
       		| <%= link_to "Delete", user, method: :delete, data: { confirm: "You sure?"} %>
           | <%= link_to "Edit", edit_user_path(user) %>
+          | <%= link_to "Suspend", suspend_user_path(user), method: 'put'%> 
       	<%end%>
       	<% if false %>
 			Web browsers can’t send DELETE requests natively, so Rails fakes them with JavaScript. This means that the delete links won’t work if the user has JavaScript disabled. If you must support non-JavaScript-enabled browsers you can fake a DELETE request using a form and a POST request, which works even without JavaScript

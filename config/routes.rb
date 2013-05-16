@@ -12,12 +12,13 @@ SampleAppHartl::Application.routes.draw do
   
   resources :books do
     get 'search', :on => :collection
-    
   end
   
   resources :comments, only: [:create, :destroy]
   resources :checkedouts, only: [:create]
-  
+  resources :reserveds, only: [:create]
+
+  resources :fines, only: [:create]
 
   root to: 'static_pages#home'
   

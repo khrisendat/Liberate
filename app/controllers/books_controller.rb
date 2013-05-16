@@ -24,6 +24,7 @@ class BooksController < ApplicationController
 		#so params[:id] takes the parameter :id from the url string. 
 		@book = Book.find(params[:id])
 		@checkedout = current_user.checkedouts.new if signed_in?
+		@reserved = current_user.reserveds.new if signed_in?
 		@comment = current_user.comments.new if signed_in?
 		@comments = @book.comments.all		
 	end

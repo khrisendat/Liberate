@@ -1,8 +1,7 @@
 <div class="user_feedback">
-	<%= form_for(@checkedout) do |f| %>
+	<%= form_for(@reserved) do |f| %>
     	<!--this is an unconventional way of doing it with a hidden field there should be other ways.--> 
     	<%= f.hidden_field :book_id, :value => @book.id %>
-  	<%= f.submit "Checkout Book", class: "btn btn-large btn-primary" %>
+  	<%= f.submit "Reserve Book", class: "btn btn-large btn-primary" %>
 	<% end %>
-
 </div>

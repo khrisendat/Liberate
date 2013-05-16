@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130514043701) do
+ActiveRecord::Schema.define(:version => 20130515221547) do
 
   create_table "books", :force => true do |t|
     t.string   "name"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20130514043701) do
     t.datetime "updated_at",                        :null => false
     t.string   "isbn"
     t.boolean  "is_checked_out", :default => false
+    t.boolean  "is_reserved",    :default => false
   end
 
   add_index "books", ["isbn"], :name => "index_books_on_isbn"
@@ -32,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20130514043701) do
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
     t.boolean  "active",     :default => true
+    t.date     "datedue"
   end
 
   create_table "checkouts", :force => true do |t|
@@ -52,6 +54,21 @@ ActiveRecord::Schema.define(:version => 20130514043701) do
   add_index "comments", ["book_id"], :name => "index_comments_on_book_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
+  create_table "fines", :force => true do |t|
+    t.integer  "checkedout_id"
+    t.float    "amount"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "reserveds", :force => true do |t|
+    t.integer  "book_id"
+    t.integer  "user_id"
+    t.boolean  "active",     :default => true
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
   create_table "reserves", :force => true do |t|
     t.integer  "book_id"
     t.integer  "user_id"
@@ -69,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20130514043701) do
     t.boolean  "admin",            :default => false
     t.float    "balance",          :default => 0.0
     t.integer  "checkedout_count", :default => 3
+    t.boolean  "is_suspended",     :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

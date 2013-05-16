@@ -3,8 +3,19 @@
 	<aside class="span4">
 		<section>
 			<h1>
+        <div>
+          <% if @user.is_suspended %>
+          <%= "Suspeneded!" %>
+          <%end%>
+        </div>
 				<%= gravatar_for @user %>
-				<%= @user.name %>
+				<%= "Welcome " + @user.name %>
+        <div>
+        <%= "Checkouts Remaing: " + @user.checkedout_count.to_s %> 
+        </div>
+        <div>
+          <%= "Balance owed: " + @user.balance.to_s %>
+        </div>
 			</h1>
 		</section>
 	</aside>
@@ -12,6 +23,7 @@
 
 <div class= "row">
 	<ul class="users">
+    <h2>Checkouts</h2>
   		<% @checkedouts.each do |checkedout| %>
         <% @checkedout = checkedout %>
         <% if @checkedout.active %>
@@ -20,10 +32,7 @@
       		    <% @book=Book.find(@checkedout.book_id) %>
       		    <%= image_tag(@book.image_url, :alt => "alt text", :class => "book_icon") %>
       		    <%= link_to @book.name, @book%>
-              <%= date = @checkedout.created_at + 28.days
-                date.to_date 
-              %>
-
+              <%= @checkedout.datedue %>     
             <%=render 'shared/returnbuttonform' %>
 <!--          
 after render in a tag group nothing else will show therefore the render has to be at the bottom here or encased in its own tag -->
@@ -32,3 +41,27 @@ after render in a tag group nothing else will show therefore the render has to b
     	<% end %>
   </ul>
 </div>	
+<div class= "row">
+  <ul class="users">
+    <h2>Reserves</h2>
+      <% @reserveds.each do |reserved| %>
+        <% @reserved = reserved %>
+        <% if @reserved.active %>
+           <li>
+      <!-- it is interesting here how just providing the object book here links to the show method--> 
+              <% @book=Book.find(@reserved.book_id) %>
+              <%= image_tag(@book.image_url, :alt => "alt text", :class => "book_icon") %>
+              <%= link_to @book.name, @book%> 
+              <li>  
+              <% if @book.is_reserved and !@book.is_checked_out%>
+                  Your Book is available for checkout. 
+              <%end%>
+            </li>
+<!--          
+after render in a tag group nothing else will show therefore the render has to be at the bottom here or encased in its own tag -->
+         </li>
+        <%end%>
+      <% end %>
+  </ul>
+</div>  
+

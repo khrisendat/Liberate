@@ -23,16 +23,27 @@
 					message += "Yes"
 				end
 				message%><br>
+			<%= 
+				message = "Currently Reserved: "
+				if @book.is_reserved == false
+					message += "No"
+				else
+					message += "Yes"
+				end
+				message%><br>	
 			<%=@book.description%>
+
 		</section>
 </div>	
 
 <div>
 		<%if signed_in? %>
 		<section>
-			<%if !@book.is_checked_out and checkedoutcountcheck %>
+			<%if !@book.is_checked_out and checkedoutcountcheck and !current_user.is_suspended%>
 				<%=render 'shared/checkedout_button' %>
-				Reserve Book
+			<%end%>
+			<%if @book.is_checked_out and !@book.is_reserved and checkedoutcountcheck and !current_user.is_suspended%>
+				<%=render 'shared/reserve_button'%>
 			<%end%>
 		</section>
 		<section>

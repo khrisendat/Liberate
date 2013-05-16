@@ -1,8 +1,11 @@
 class Book < ActiveRecord::Base
-  attr_accessible :name, :author, :image_url, :description, :isbn, :is_checked_out
+  attr_accessible :name, :author, :image_url, :description, :isbn, :is_checked_out, :is_reserved
 
   has_one :user, :through => :checkedout
+  has_one :user, :through => :reserved
   has_one :checkedout
+  has_one :reserved
+
   has_many :comments
 
   validates :name, presence: true

@@ -1,10 +1,13 @@
 class User < ActiveRecord::Base
   #mass assignable atrributes
-  attr_accessible :email, :name, :password, :password_confirmation, :checkedout_count, :remember_token, :password_digest 
+  attr_accessible :email, :name, :password, :password_confirmation, :checkedout_count, :remember_token, :password_digest, :balance, :is_suspended
   
-  has_many :comments
   has_many :checkedouts
+  has_many :reserveds
   has_many :books, :through => :checkedouts
+  has_many :books, :through => :reserveds
+
+  has_many :comments
   
   has_secure_password
   
