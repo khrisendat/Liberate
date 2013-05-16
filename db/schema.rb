@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130516003914) do
+ActiveRecord::Schema.define(:version => 20130516030626) do
 
   create_table "books", :force => true do |t|
     t.string   "name"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20130516003914) do
     t.string   "isbn"
     t.boolean  "is_checked_out", :default => false
     t.boolean  "is_reserved",    :default => false
+    t.string   "keyword1",       :default => ""
   end
 
   add_index "books", ["isbn"], :name => "index_books_on_isbn"

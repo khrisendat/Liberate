@@ -1,3 +1,5 @@
+require 'set'
+
 class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:index, :edit, :update, :destroy]
   before_filter :correct_user, only: [:edit,:update]
@@ -11,14 +13,35 @@ class UsersController < ApplicationController
   	@user = User.find(params[:id])
     @checkedouts = @user.checkedouts.all
     @reserveds = @user.reserveds.all
-    
+
     @checkedouts.each do |checkedout|
       a = Date.today > checkedout.datedue + 28.days
       if checkedout.active and a
         @fine=Fine.create(checkedout_id: checkedout.id, amount: 0.5)
         @user.update_attributes(:balance => @user.balance + 1)
       end
-    end 
+    end
+
+    @books = Set.new
+    recommends = @user.checkedouts.reorder('created_at DESC').limit(2)
+    a=Book.find(recommends[0].book_id)
+    b=Book.find(recommends[1].book_id)
+
+    aname = Book.search(a.name)
+    aauthor = Book.search(a.author)
+    @books.merge(aname)
+    @books.merge(aauthor)
+
+    bname = Book.search(b.name)
+    bauthor = Book.search(b.name)
+    @books.merge(bname)
+    @books.merge(bauthor)
+    
+    @books = @books.to_a
+
+    if @books.count > 5
+      @books = @books.last(5)
+    end
   end
 
   def create
@@ -91,12 +114,17 @@ class UsersController < ApplicationController
     User.update_all("checkedout_count = " + checkout_remaining.to_s, ["users.id = ?", current_user.id])
     
     @user=User.find(params[:id])
+    a= @user.checkedouts.order("created_at DESC").limit(5)
+    if a.length >= 5
+      if !a[0].fine and !a[1].fine and !a[2].fine and !a[3].fine and !a[4].fine 
+        User.update_all("is_vip = 'true'" , ["users.id = ?", @user.id])
+      end
+    end
+    @user=User.find(params[:id])
     @checkedouts = @user.checkedouts.all
     @reserveds = @user.reserveds.all
     render 'show'
   end
-
-
 
 
   private

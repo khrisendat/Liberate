@@ -1,21 +1,23 @@
 <%provide(:title,@user.name)%>
+
+
 <div class="row">
-	<aside class="span4">
-		<section>
-			<h1>
+
+  </div>
+        <%= gravatar_for @user %>
+  <div>
+		<section class = "userInfo">
         <div>
+          <%= "Welcome " + @user.name %>
           <% if @user.is_suspended %>
           <%= "Suspeneded!" %>
           <%end%>
-        </div>
-				<%= gravatar_for @user %>
-				<%= "Welcome " + @user.name %>
-        <div>
+        
           <% if @user.is_vip 
               membershiptype = 'VIP'
             else
               membershiptype = 'Basic'%>
-          <%end%>
+          <%end%><br>
           <%= "Membership Type: " + membershiptype %> 
         </div>
         <div>
@@ -24,10 +26,22 @@
         <div>
           <%= "Balance owed: " + @user.balance.to_s %>
         </div>
-			</h1>
 		</section>
-	</aside>
 </div>	
+
+
+<div class= "row">
+  <ul class="users">
+    <h2>Recommendations</h2>
+    <% @books.each do |book| %>
+    <li>
+      <!-- it is interesting here how just providing the object book here links to the show method--> 
+      <%= image_tag(book.image_url, :alt => "alt text", :class => "book_icon") %>
+      <%= link_to book.name, book%>
+    <%end%>
+    </li>  
+  </ul>
+</div> 
 
 <div class= "row">
 	<ul class="users">
