@@ -10,7 +10,7 @@
         <div>
           <%= "Welcome " + @user.name %>
           <% if @user.is_suspended %>
-          <%= "Suspeneded!" %>
+          <%= "Suspeneded!, Please return all your books." %>
           <%end%>
         
           <% if @user.is_vip 
@@ -33,13 +33,15 @@
 <div class= "row">
   <ul class="users">
     <h2>Recommendations</h2>
+    <% if @books %>
     <% @books.each do |book| %>
     <li>
       <!-- it is interesting here how just providing the object book here links to the show method--> 
       <%= image_tag(book.image_url, :alt => "alt text", :class => "book_icon") %>
       <%= link_to book.name, book%>
     <%end%>
-    </li>  
+    </li>
+    <% end %>  
   </ul>
 </div> 
 
@@ -54,8 +56,10 @@
       		    <% @book=Book.find(@checkedout.book_id) %>
       		    <%= image_tag(@book.image_url, :alt => "alt text", :class => "book_icon") %>
       		    <%= link_to @book.name, @book%>
-              <%= @checkedout.datedue %>     
+              <p>Date Due: <%= @checkedout.datedue %>
+              </p>     
             <%=render 'shared/returnbuttonform' %>
+            <%=render 'shared/extendbuttonform' %>
 <!--          
 after render in a tag group nothing else will show therefore the render has to be at the bottom here or encased in its own tag -->
          </li>
@@ -83,6 +87,46 @@ after render in a tag group nothing else will show therefore the render has to b
 after render in a tag group nothing else will show therefore the render has to be at the bottom here or encased in its own tag -->
          </li>
         <%end%>
+      <% end %>
+  </ul>
+</div>  
+
+<div class= "row">
+  <ul class="users">
+    <h2>Checkout History</h2>
+      <% @checkedouts.each do |action| %>
+           <li>
+      <!-- it is interesting here how just providing the object book here links to the show method--> 
+              <% book=Book.find(action.book_id) %>
+              <%= image_tag(book.image_url, :alt => "alt text", :class => "book_icon") %>
+              You checked out: 
+              <%= link_to book.name, book%>
+              at
+              <%= action.created_at.to_date %>
+<!--          
+after render in a tag group nothing else will show therefore the render has to be at the bottom here or encased in its own tag -->
+         </li>
+      <% end %>
+  </ul>
+</div>  
+
+
+
+<div class= "row">
+  <ul class="users">
+    <h2>Reserve History</h2>
+      <% @reserveds.each do |action| %>
+           <li>
+      <!-- it is interesting here how just providing the object book here links to the show method--> 
+              <% book=Book.find(action.book_id) %>
+              <%= image_tag(book.image_url, :alt => "alt text", :class => "book_icon") %>
+              You reserved:
+              <%= link_to book.name, book%> 
+              at
+              <%= action.created_at.to_date %>
+<!--          
+after render in a tag group nothing else will show therefore the render has to be at the bottom here or encased in its own tag -->
+         </li>
       <% end %>
   </ul>
 </div>  

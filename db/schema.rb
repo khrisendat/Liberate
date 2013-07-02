@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130516030626) do
+ActiveRecord::Schema.define(:version => 20130520002114) do
 
   create_table "books", :force => true do |t|
     t.string   "name"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20130516030626) do
     t.boolean  "is_checked_out", :default => false
     t.boolean  "is_reserved",    :default => false
     t.string   "keyword1",       :default => ""
+    t.integer  "avg",            :default => 0
   end
 
   add_index "books", ["isbn"], :name => "index_books_on_isbn"
@@ -31,13 +32,16 @@ ActiveRecord::Schema.define(:version => 20130516030626) do
   create_table "checkedouts", :force => true do |t|
     t.integer  "book_id"
     t.integer  "user_id"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
-    t.boolean  "active",     :default => true
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "active",      :default => true
     t.date     "datedue"
+    t.integer  "extendCount", :default => 2
   end
 
   create_table "checkouts", :force => true do |t|
+    t.integer  "book_id"
+    t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "user"

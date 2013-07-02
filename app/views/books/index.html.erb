@@ -1,5 +1,11 @@
+
+
+
 <% provide(:title, 'All books') %>
+
 <h1>All Books</h1>
+
+
 
 
 <%= form_tag search_books_path, :method => 'get' do %>
@@ -15,7 +21,6 @@
         <div class="addBook"><%= link_to "Add New Book", new_book_path%></div>
     <%end%>
 <%end%>
-
 
 <!--change this class later-->
 <ul class="users">
@@ -36,3 +41,6 @@
   <% end %>
 <% end %>
 </ul>
+
+
+

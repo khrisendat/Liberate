@@ -23,6 +23,14 @@ class CommentsController < ApplicationController
 		end
 	end 
 
+	def average(book)
+		avg = 0
+		book.comments do |comment|
+			avg += comment.rating
+		end
+		avg /= comment.length
+	end
+
 # instance variables are not passed within classes. 
 	def create
 		@comment = current_user.comments.new(params[:comment])
@@ -36,14 +44,20 @@ class CommentsController < ApplicationController
 
 		elsif comments.length >= 2
 			if bad_ratings(comments) == -1 and @comment.rating < 20
+				flash[:error] = "You have made too many low ratings.  Your comment and rating were not saved."
+				comments[0].destroy
+				comments[1].destroy
+				redirect_to @book
+			elsif bad_ratings(comments) == 1 and @comment.rating > 80
 				flash[:error] = "You have made too many high ratings.  Your comment and rating were not saved."
 				comments[0].destroy
 				comments[1].destroy
 				redirect_to @book
-			else bad_ratings(comments) == 1 and @comment.rating > 80
-				flash[:error] = "You have made too many low ratings.  Your comment and rating were not saved."
-				comments[0].destroy
-				comments[1].destroy
+			elsif @comment.save
+				flash[:success] = "Comment has been succesfully created"
+				redirect_to @book
+			else
+				flash[:error] = "Comment has not been succesfully created"
 				redirect_to @book
 			end
 
@@ -58,6 +72,7 @@ class CommentsController < ApplicationController
 			flash[:error] = "Comment has not been succesfully created"
 			redirect_to @book
 		end
+
 
 	end
 

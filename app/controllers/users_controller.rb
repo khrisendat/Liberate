@@ -22,26 +22,8 @@ class UsersController < ApplicationController
       end
     end
 
-    @books = Set.new
-    recommends = @user.checkedouts.reorder('created_at DESC').limit(2)
-    a=Book.find(recommends[0].book_id)
-    b=Book.find(recommends[1].book_id)
+    @books = getRecommendations
 
-    aname = Book.search(a.name)
-    aauthor = Book.search(a.author)
-    @books.merge(aname)
-    @books.merge(aauthor)
-
-    bname = Book.search(b.name)
-    bauthor = Book.search(b.name)
-    @books.merge(bname)
-    @books.merge(bauthor)
-    
-    @books = @books.to_a
-
-    if @books.count > 5
-      @books = @books.last(5)
-    end
   end
 
   def create
@@ -109,6 +91,7 @@ class UsersController < ApplicationController
     @checkedout = Checkedout.find(params[:checkedout_id])
     @checkedout.update_attributes(:active => false)
 
+
     checkout_remaining = current_user.checkedout_count  
     checkout_remaining += 1
     User.update_all("checkedout_count = " + checkout_remaining.to_s, ["users.id = ?", current_user.id])
@@ -117,15 +100,39 @@ class UsersController < ApplicationController
     a= @user.checkedouts.order("created_at DESC").limit(5)
     if a.length >= 5
       if !a[0].fine and !a[1].fine and !a[2].fine and !a[3].fine and !a[4].fine 
+        unless @user.is_vip
+          User.update_all("checkedout_count = " + (checkout_remaining+5).to_s, ["users.id = ?", current_user.id])
+        end
+
         User.update_all("is_vip = 'true'" , ["users.id = ?", @user.id])
       end
     end
     @user=User.find(params[:id])
     @checkedouts = @user.checkedouts.all
     @reserveds = @user.reserveds.all
-    render 'show'
+    @books = getRecommendations
+
+    redirect_to @user
   end
 
+  def stats
+    @books = Book.all
+  end
+
+
+  def extend_book
+    @user=User.find(params[:id])
+    @checkedout = Checkedout.find(params[:checkedout_id])
+    if @checkedout.extendCount > 0
+      @checkedout.update_attributes(:datedue => @checkedout.datedue+14.days)
+      @checkedout.update_attributes(:extendCount => @checkedout.extendCount-1)
+      flash[:success] = "You have extended your due date"
+    else 
+      flash[:error] = "You may only extend twice"
+    end
+    redirect_to(@user)
+
+  end
 
   private
 
@@ -133,4 +140,49 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
       redirect_to root_path, notice: "Not Authorized!" unless current_user?(@user) || current_user.admin?
     end
+
+    def getRecommendations
+      @books = Set.new
+    
+      recommends = @user.checkedouts.reorder('created_at DESC').limit(2)
+      if recommends[0]
+        a=Book.find(recommends[0].book_id)
+      #aname = Book.search(a.name)
+      unless a.keyword1 = ""
+        aauthor = Book.searchkeywords(a.keyword1)
+      else
+        aauthor = []
+      end
+      aauthor = Book.searchkeywords(a.keyword1)
+      #@books.merge(aname)
+      @books.merge(aauthor)
+      temp = Book.search(a.name)
+      @books -= temp
+    end
+
+    if recommends[1]
+      b=Book.find(recommends[1].book_id)
+      #bname = Book.search(b.name)
+      unless b.keyword1 = ""
+        bauthor = Book.searchkeywords(b.keyword1)
+      else
+        bauthor = []
+      end
+      #@books.merge(bname)
+      @books.merge(bauthor)
+      temp = Book.search(b.name)
+      @books -= temp
+    end
+
+    if @books.count > 5
+      @books = @books.to_a
+      @books = @books.last(5)
+    end
+
+    
+
+    return @books
+
+    end
+
 end

@@ -26,7 +26,8 @@ class BooksController < ApplicationController
 		@checkedout = current_user.checkedouts.new if signed_in?
 		@reserved = current_user.reserveds.new if signed_in?
 		@comment = current_user.comments.new if signed_in?
-		@comments = @book.comments.all		
+		@comments = @book.comments.all
+		@book.update_attributes(:avg => average(@comments))
 	end
 
 	def index
@@ -62,8 +63,16 @@ class BooksController < ApplicationController
   			@books = Book.all
   		end
 	end
-
 	
-	
+	def average(comments)
+		avg = 0
+		comments.each do |comment|
+			avg += comment.rating
+		end
+		if comments.count
+			avg /= comments.length+0.00000001
+		end
+		return avg.ceil
+	end
 
 end

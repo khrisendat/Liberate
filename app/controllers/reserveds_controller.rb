@@ -8,7 +8,7 @@ class ReservedsController < ApplicationController
 			@books=Book.all	
 			@book.update_attributes(:is_reserved => true) 
 			checkout_remaining = current_user.checkedout_count  
-			checkout_remaining -= 1
+			#checkout_remaining -= 1
 			User.update_all("checkedout_count = " + checkout_remaining.to_s, ["users.id = ?", current_user.id])
 			redirect_to @book
 		else

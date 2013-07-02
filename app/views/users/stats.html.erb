@@ -1,0 +1,22 @@
+<ul class="user">
+  <% if @books%>
+  <h2>Lowest Rated Books</h2>
+
+  <%@lowratedBooks = Book.where('avg > 0').limit(3).order('avg DESC')%>
+
+  <% @lowratedBooks.each do |book| %>
+    <li>
+      <!-- it is interesting here how just providing the object book here links to the show method--> 
+      <%= image_tag(book.image_url, :alt => "alt text", :class => "book_icon") %>
+      <%= link_to book.name, book%>
+      <% if signed_in? %>
+        <% if current_user.admin? %>
+        <!--data here just makes the pop up and takes the answer to on whether to execute-->
+          | <%= link_to "Delete", book, method: :delete, data: { confirm: "You sure?"} %>
+          | <%= link_to "Edit", edit_book_path(book) %>
+        <%end%>
+      <%end%>
+    </li>
+  <% end %>
+<% end %>
+</ul>

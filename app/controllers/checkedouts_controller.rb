@@ -5,7 +5,7 @@ class CheckedoutsController < ApplicationController
 	def create
 		@checkedout = current_user.checkedouts.new(params[:checkedout])
 		if @checkedout.save
-			@checkedout.update_attributes(:datedue => Date.today)
+			@checkedout.update_attributes(:datedue => Date.today+28.days)
 			flash[:success] = "Book has been succesfully check out"
 			@book=Book.find(params[:checkedout][:book_id])
 			@books=Book.all			
@@ -14,9 +14,9 @@ class CheckedoutsController < ApplicationController
 			##this is done in the case where the user who recieved the book is coming to check it out. 
 			if @book.is_reserved 
 				@book.update_attributes(:is_reserved=>false)
-				@book.reserved.destroy
+				@book.reserved.update_attributes(:active=>false)
 				checkout_remaining = current_user.checkedout_count  
-				checkout_remaining += 1
+				#checkout_remaining += 1
 				User.update_all("checkedout_count = " + checkout_remaining.to_s, ["users.id = ?", current_user.id])
 			end
 			#there is another way. This is a hack. update_attributes didn't work here because the sql call that it made didn't return anything.

@@ -4,6 +4,8 @@ SampleAppHartl::Application.routes.draw do
     member do
       put 'suspend'
       put 'return_book'
+      get 'stats'
+      put 'extend_book'
     end
 
   end

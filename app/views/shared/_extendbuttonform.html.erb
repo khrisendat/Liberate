@@ -1,0 +1,9 @@
+<div>	<%= form_tag extend_book_user_path(@user), :method => 'put' do %>
+	<%= hidden_field_tag :book_id, @book.id %>
+	<%= hidden_field_tag :checkedout_id, @checkedout.id %>
+
+  	<%= submit_tag "Extend", class: "btn btn-large btn-primary" %>
+	<% end %>
+
+
+</div>
